@@ -14,9 +14,11 @@ app.use(cors())
 app.use(express.json())
 app.use(clerkMiddleware())
 
-app.get('/', (req, res) =>
-     res.send('api is running')
-)
+//goi api clerk webhook
+import clerWebhooks from './controllers/clerkWebhooks.js';
+app.use("/api/clerk", clerWebhooks);
+
+app.get('/', (req, res) => res.send('api is running'))
 
 const PORT = process.env.PORT || 3000;
 
