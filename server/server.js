@@ -16,9 +16,12 @@ app.use(clerkMiddleware())
 
 //goi api clerk webhook
 import clerWebhooks from './controllers/clerkWebhooks.js';
+import userRoutes from './routers/userRoutes.js';
 app.use("/api/clerk", clerWebhooks);
 
+
 app.get('/', (req, res) => res.send('api is running'))
+app.use('/api/user', userRouter)
 
 const PORT = process.env.PORT || 3000;
 
