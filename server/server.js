@@ -20,7 +20,11 @@ app.use(clerkMiddleware())
 import clerWebhooks from './controllers/clerkWebhooks.js';
 import hotelRouter from './routes/hotelRoutes.js';
 import roomRouter from './routes/roomRoutes.js';
+
 import userRouter from './routes/useRoutes.js';
+
+import bookingRoute from './routes/bookingRoutes.js';
+
 
 app.use("/api/clerk", clerWebhooks);
 
@@ -29,6 +33,7 @@ app.use('/api/user', userRouter)
 app.use('/api/hotels',hotelRouter)
 app.use('/api/rooms',roomRouter)
 app.use("/api/clerk", clerWebhooks);
+app.use('/api/bookings',bookingRoute)
 
 
 app.get('/', (req, res) => res.send('api is running'))
