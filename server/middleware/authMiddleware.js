@@ -1,12 +1,14 @@
-import User from "../models/User";
+import User from "../models/User.js";
 
+//middleware kiem tra user da duoc xac thuc chua
 export const protect = async (req, res, next) => {
-    const {useId} = req.auth;
-    if (!useId) {
-        res.json({success: false, message: "not authticated"})
-    } else {
-        const user = await User.findById(useId);
+    const {userId} = req.auth;
+    if(!userId){
+        res.json({success: false, message: "Not authorized"});
+    }else{
+        const user = await User.findById(userId);
         req.user = user;
-        next()
+        next();
     }
-}
+
+};

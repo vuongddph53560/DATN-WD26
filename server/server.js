@@ -28,8 +28,11 @@ app.get('/', (req, res)=> res.send("API is working"))
 app.use('/api/user', userRouter)
 app.use('/api/hotels',hotelRouter)
 app.use('/api/rooms',roomRouter)
+app.use("/api/clerk", clerWebhooks);
+
 
 app.get('/', (req, res) => res.send('api is running'))
+app.use('/api/user', userRouter)
 
 const PORT = process.env.PORT || 3000;
 
