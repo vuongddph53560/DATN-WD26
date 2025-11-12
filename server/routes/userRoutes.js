@@ -5,6 +5,6 @@ import { storeRecentSearchedCities } from '../controllers/userController';
 const userRoutes = express.Router();
 
 userRoutes.get('/',protect, getUserData);
-userRoutes.postt('/store-recent-search',protect, storeRecentSearchedCities );
+userRoutes.post('/store-recent-search',protect, storeRecentSearchedCities );
 
 export default userRoutes;
