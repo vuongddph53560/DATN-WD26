@@ -1,5 +1,5 @@
 import express from "express";
-import { registerHotel } from "../controllers/hotelController";
+import {registerHotel} from '../controllers/hotelController'
 
 const hotelRouter = express.Router();
 
