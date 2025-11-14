@@ -4,7 +4,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import connectDB from './configs/db.js';
 import { clerkMiddleware } from '@clerk/express';
-import clerkWebhooks from '../server/controllers/clerkWebhooks.js';
+import clerkWebhooks from "../server/controllers/clerkWebhooks.js"
 
 connectDB();
 
