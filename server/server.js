@@ -3,41 +3,21 @@ import "dotenv/config.js"
 import cors from 'cors';
 import mongoose from 'mongoose';
 import connectDB from './configs/db.js';
-import connectCloudinary from './configs/cloudinary.js';
 import { clerkMiddleware } from '@clerk/express';
+import clerkWebhooks from '../server/controllers/clerkWebhooks.js';
 
-connectDB()
-connectCloudinary();
+connectDB();
 
 const app = express()
 app.use(cors())
 
 //middleware
-app.use(express.json())
-app.use(clerkMiddleware())
+app.use(express.json());
+app.use(clerkMiddleware());
 
-//goi api clerk webhook
-import clerWebhooks from './controllers/clerkWebhooks.js';
-// import hotelRouter from './routes/hotelRoutes.js';
-// import roomRouter from './routes/roomRoutes.js';
+app.use("/api/clerk", clerkWebhooks);
 
-import userRouter from './routes/useRoutes.js';
-
-// import bookingRoute from './routes/bookingRoutes.js';
-
-
-app.use("/api/clerk", clerWebhooks);
-
-app.get('/', (req, res)=> res.send("API is working"))
-// app.use('/api/user', userRouter)
-// app.use('/api/hotels',hotelRouter)
-// app.use('/api/rooms',roomRouter)
-// app.use('/api/bookings',bookingRoute)
-
-
-app.get('/', (req, res) => res.send('api is running'))
-app.use('/api/user', userRouter)
-
+app.get('/', (req, res)=> res.send("API is working"));
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () =>
