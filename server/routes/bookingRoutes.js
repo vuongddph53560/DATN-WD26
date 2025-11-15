@@ -1,11 +1,9 @@
 import express from "express";
-import { checkAvailabilityAPI,
-     createBooking,
-      getHotelBookings, 
-      getUserBookings } from "../controllers/bookingController.js";
-const bookingRoute = express.Router();
-bookingRoute.post('/check-availability', checkAvailabilityAPI);
-bookingRoute.post('/book',protect, createBooking);
-bookingRoute.get('/user',protect, getUserBookings);
-bookingRoute.get('/hotel',protect, getHotelBookings);
-export default bookingRoute;
+import { protect } from "../middleware/authMiddleware.js";
+import { checkAvailabilityAPI, createBooking, getHotelBookings, getUserBookings } from "../controllers/bookingController.js";
+const bookingRouter = express.Router();
+bookingRouter.post('/check-availability', checkAvailabilityAPI);
+bookingRouter.post('/book',protect, createBooking);
+bookingRouter.get('/user',protect, getUserBookings);
+bookingRouter.get('/hotel',protect, getHotelBookings);
+export default bookingRouter;
