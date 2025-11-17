@@ -16,7 +16,7 @@ app.use(clerkMiddleware())
 
 //goi api clerk webhook
 import clerWebhooks from './controllers/clerkWebhooks.js';
-import userRoutes from './routers/userRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 app.use("/api/clerk", clerWebhooks);
 
 
