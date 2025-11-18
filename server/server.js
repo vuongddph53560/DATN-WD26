@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import connectDB from './configs/db.js';
 import { clerkMiddleware } from '@clerk/express';
 
+
 connectDB()
 
 const app = express()

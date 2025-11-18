@@ -1,19 +1,19 @@
 import mongoose from "mongoose";
 
-const bookingSchemma = new mongoose.Schema({
-   user: { type: String, ref: "User", require: true },
-   room: { type: String, ref: "Room", require: true },
-   hotel: { type: String, ref: "Hotel", require: true },
-   checkInDate: { type: Date, require: true },
-   checkOutDate: { type: Date, require: true },
-   totalPrice: { type: Number, require: true },
-   guests: { type: Number, require: true },
+const bookingSchema = new mongoose.Schema({
+   user: { type: String, ref: "User", required: true },
+   room: { type: String, ref: "Room", required: true },
+   hotel: { type: String, ref: "Hotel", required: true },
+   checkInDate: { type: Date, required: true },
+   checkOutDate: { type: Date, required: true },
+   totalPrice: { type: Number, required: true },
+   guests: { type: Number, required: true },
    status: {
       type: String,
       enum: ["pending", "confirmed", "cancelled"],
       default: "pending"
    },
-   paymenMethod: {
+   paymentMethod: {
       type: String,
       require: true,
       default: "Pay At Hotel"
@@ -22,5 +22,5 @@ const bookingSchemma = new mongoose.Schema({
 
 }, { timestamps: true });
 
-const Booking = mongoose.model("Booking", bookingSchemma);
+const Booking = mongoose.model("Booking", bookingSchema);
 export default Booking;
