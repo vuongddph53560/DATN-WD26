@@ -1,8 +1,13 @@
-import express from "express"
-import { protect } from "../middleware/authMiddleware.js";
-import {registerHotel} from "../controllers/hotelController.js"
+import express from "express";
+import { requireAuth } from "@clerk/express";
+import { registerHotel } from "../controllers/hotelController.js";
+
 const hotelRouter = express.Router();
 
-hotelRouter.post('/register', protect, registerHotel);
+hotelRouter.get('/', (req, res) => {
+  res.json({ ok: true });
+});
+
+hotelRouter.post('/register', requireAuth(), registerHotel);
 
 export default hotelRouter;

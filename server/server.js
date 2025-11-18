@@ -1,35 +1,45 @@
 import express from 'express';
-import "dotenv/config.js"
+import 'dotenv/config.js';
 import cors from 'cors';
 
 import connectDB from './configs/db.js';
 import { clerkMiddleware } from '@clerk/express';
-import clerkWebhooks from "../server/controllers/clerkWebhooks.js"
-import userRouter from './routes/useRoutes.js';
+import clerkWebhooks from './controllers/clerkWebhooks.js';
 import hotelRouter from './routes/hotelRoutes.js';
 import connectCloudinary from './configs/cloudinary.js';
 import roomRouter from './routes/roomRoutes.js';
 import bookingRouter from './routes/bookingRoutes.js';
+import userRouter from './routes/useRoutes.js';
 
 connectDB();
 connectCloudinary();
 
-const app = express()
-app.use(cors())
+const app = express();
 
-//middleware
+// CORS: tùy chỉnh origin nếu cần
+app.use(cors({
+  origin: process.env.CLIENT_URL || '*'
+}));
+
+// middleware
 app.use(express.json());
+// nếu muốn áp dụng Clerk cho tất cả route; hoặc mount cho các route cần
 app.use(clerkMiddleware());
 
-app.use("/api/clerk", clerkWebhooks);
+app.use('/api/clerk', clerkWebhooks);
 
-app.get('/', (req, res)=> res.send("API is working"));
-app.use('/api/user',userRouter)
-app.use('/api/hotels',hotelRouter)
-app.use('/api/rooms',roomRouter)
-app.use('/api/bookings',bookingRouter)
+app.get('/', (req, res) => res.send('API is working'));
+
+app.use('/api/user', userRouter );
+app.use('/api/hotels', hotelRouter);
+app.use('/api/rooms', roomRouter);
+app.use('/api/bookings', bookingRouter);
+
+// basic error handler
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(err.status || 500).json({ message: err.message || 'Internal Server Error' });
+});
+
 const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () =>
-    console.log(`Server is running on port ${PORT}`)
-);
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

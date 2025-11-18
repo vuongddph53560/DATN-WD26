@@ -1,23 +1,31 @@
 import Hotel from "../models/Hotel.js";
-import User from "../models/User.js";
 
-export const registerHotel = async (req, res)=>{
-    try {
-        if (!req.user || !req.user._id) {
-             // Thường là do middleware protect bị lỗi hoặc user bị xóa
-             return res.status(401).json({ success: false, message: "User authentication data missing." });
-        }
-        const {name, address, contact, city} = req.body;
-        const owner = req.user._id
-
-        const hotel = await Hotel.findOne({owner})
-        if (hotel) {
-            return res.json({success: false, message:"Hotel Already Register"})
-        }
-        await Hotel.create({name, address, contact, city, owner});
-        await User.findByIdAndUpdate(owner, {role:"hotelOwner"});
-        res.json({success:true, message:"Hotel Registered Successfully"})
-    } catch (error) {
-        res.json({success:false, message: error.message})
+export const registerHotel = async (req, res) => {
+  try {
+    // get Clerk userId
+    const userId = req.auth.userId;
+    if (!userId) {
+      return res.status(401).json({ success: false, message: "Not authenticated" });
     }
-}
+
+    const { name, address, contact, city } = req.body;
+
+    const hotel = await Hotel.create({
+      name,
+      address,
+      contact,
+      city,
+      owner: userId, // Clerk userId
+    });
+
+    return res.json({
+      success: true,
+      message: "Hotel registered successfully",
+      hotel
+    });
+
+  } catch (err) {
+    console.log("Hotel register error:", err);
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
+};

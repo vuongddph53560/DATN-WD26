@@ -1,9 +1,22 @@
 import express from "express";
-import { protect } from "../middleware/authMiddleware.js";
-import { checkAvailabilityAPI, createBooking, getHotelBookings, getUserBookings } from "../controllers/bookingController.js";
+import { requireAuth } from "@clerk/express";
+import {
+  checkAvailabilityAPI,
+  createBooking,
+  getHotelBookings,
+  getUserBookings
+} from "../controllers/bookingController.js";
+
 const bookingRouter = express.Router();
+
+// Test route
+bookingRouter.get('/', (req, res) => {
+  return res.json({ ok: true, message: 'bookings route is working' });
+});
+
 bookingRouter.post('/check-availability', checkAvailabilityAPI);
-bookingRouter.post('/book',protect, createBooking);
-bookingRouter.get('/user',protect, getUserBookings);
-bookingRouter.get('/hotel',protect, getHotelBookings);
+bookingRouter.post('/book', requireAuth(), createBooking);
+bookingRouter.get('/user', requireAuth(), getUserBookings);
+bookingRouter.get('/hotel', requireAuth(), getHotelBookings);
+
 export default bookingRouter;
