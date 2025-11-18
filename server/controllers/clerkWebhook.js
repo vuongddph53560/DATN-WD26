@@ -4,16 +4,15 @@ import { Webhook } from "svix";
 const clerkWebhooks = async (req, res) => {
     try {
         const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
-
-        //nhan tieu de 
+        
         const headers = {
-            'svix-id': req.headers['svix-id'],
+            'svix-id':req.headers['svix-id'],
             'svix-timestamp': req.headers['svix-timestamp'],
-            'svix-signature': req.headers['svix-signature'],
+            'svix-signature': req.headers['svix-signature']
         };
         //xac minh webhook
         await whook.verify(JSON.stringify(req.body), headers);
-
+    
         //lay du lieu tu webhook
         const {data, type} = req.body;
         const userData = {
@@ -24,31 +23,26 @@ const clerkWebhooks = async (req, res) => {
         }
 
         //chuyen doi truong cho cac su kien
-        switch(type){
+        switch (type) {
             case "user.created":{
                 await User.create(userData);
                 break;
             }
-
             case "user.updated":{
-                await User.findByIdAndUpdate(data.id, userData);
+                await User.findByIdAndUpdate(data.id,userData);
                 break;
             }
-
             case "user.deleted":{
                 await User.findByIdAndDelete(data.id);
                 break;
             }
-
-        default:
-            break;
+            default:
+                break;
         }
-        res.json({success: true, message: "Webhook received"})
-    
+        res.json({success: true, message: "Webhook đã nhận"})
     } catch (error) {
         console.log(error.message);
         res.json({success: false, message: error.message});
     }
- }
-
- export default clerkWebhooks;
+}
+export default clerkWebhooks;

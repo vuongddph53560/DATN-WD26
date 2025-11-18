@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { roomsDummyData } from '../../assets/assets'
-import Title from '../../components/Title'
+import Title from '../../components/Title.jsx'
 
 const ListRoom = () => {
   const [rooms, setRooms] = useState(roomsDummyData)

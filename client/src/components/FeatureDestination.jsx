@@ -1,7 +1,7 @@
 import React from 'react'
 import { roomsDummyData } from '../assets/assets'
-import HotelCard from './HotelCard'
-import Title from './Title'
+import HotelCard from './HotelCard.jsx'
+import Title from './Title.jsx'
 import { useNavigate } from 'react-router-dom'
 
 const FeatureDestination = () => {

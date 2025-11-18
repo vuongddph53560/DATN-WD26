@@ -3,10 +3,6 @@ import User from "../models/User.js";
 
 export const registerHotel = async (req, res)=>{
     try {
-        if (!req.user || !req.user._id) {
-             // Thường là do middleware protect bị lỗi hoặc user bị xóa
-             return res.status(401).json({ success: false, message: "User authentication data missing." });
-        }
         const {name, address, contact, city} = req.body;
         const owner = req.user._id
 

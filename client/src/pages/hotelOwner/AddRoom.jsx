@@ -1,5 +1,5 @@
 import React, { lazy, useState } from 'react'
-import Title from '../../components/Title'
+import Title from '../../components/Title.jsx'
 import { assets } from '../../assets/assets'
 
 const AddRoom = () => {
@@ -23,7 +23,7 @@ const AddRoom = () => {
   })
   return (
     <form>
-      <Title align='left' font='outfit' title='Add Room' subTitle=''/>
+      <Title align='left' font='outfit' title='Add Room' subTitle='Fill in the details carefully and accurate room details, pricing, and amenities, to enhance the user booking experience.'/>
       {/* */}
        <p className='text-gray-800 mt-10'>Hình ảnh</p>
        <div className='grid grid-cols-2 sm:flex grap-4 my-2 flex-wrap'>

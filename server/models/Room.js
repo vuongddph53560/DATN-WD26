@@ -1,4 +1,3 @@
-
 import mongoose from "mongoose";
 
 const roomSchemma = new mongoose.Schema({
@@ -11,4 +10,5 @@ const roomSchemma = new mongoose.Schema({
 }, {timestamps:true});
 
 const Room = mongoose.model("Room", roomSchemma);
+
 export default Room;

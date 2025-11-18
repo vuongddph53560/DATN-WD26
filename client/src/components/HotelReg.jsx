@@ -6,7 +6,7 @@ import toast from 'react-hot-toast'
 const HotelReg = () => {
 
     const {setShowHotelReg, axios, getToken, setIsOwner} = useAppContext()
-
+ 
     const [name, setName] = useState("")
     const [address, setAddress] = useState("")
     const [contact, setContact] = useState("")
@@ -15,7 +15,7 @@ const HotelReg = () => {
     const onSubmitHandler = async (event) => {
         try {
             event.preventDefault();
-            const {data} = await axios.post(`/api/hotels/`,{name, contact, address, city},{headers: {Authorization:`Bearer ${await getToken()}`}})
+            const {data} = await axios.post(`/api/hotels`,{name, contact, address, city},{headers: {Authorization:`Bearer ${await getToken()}`}})
             if(data.success){
                toast.success(data.message)
                setIsOwner(true)
@@ -26,8 +26,7 @@ const HotelReg = () => {
         } catch (error) {
             toast.error(error.message)
         }
-    }
-
+    };
   return (
     <div onClick={() => setShowHotelReg(false)} className='fixed top-0 bottom-0 left-0 right-0 z-100 flex items-center justify-center bg-black/70'>
       <form onSubmit={onSubmitHandler} onClick={(e) => e.stopPropagation()} className='flex bg-white rounded-xl max-w-4xl max-md:mx-2'>

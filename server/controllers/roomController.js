@@ -1,5 +1,4 @@
 import Hotel from "../models/Hotel.js";
-import { v2 as cloudinary} from "cloudinary";
 import Room from "../models/Room.js";
 
 export const createRoom = async (req, res)=>{
@@ -27,10 +26,7 @@ export const createRoom = async (req, res)=>{
         res.json({success:false, message:"Room created successfully"})
     }
 }
-
-
-
-export const getRooms = async (req, res)=>{
+export const getRooms =async (req,res) => {
     try {
         const rooms = await Room.find({isAvailable: true}).populate({
             path: 'hotel',
@@ -44,10 +40,7 @@ export const getRooms = async (req, res)=>{
         res.json({success:false, message: error.message});
     }
 }
-
-
-
-export const getOwnerRooms = async (req, res)=>{
+export const getOwnerRooms =async (req,res) => {
     try {
         const hotelData = await Hotel({owner: req.auth.userId})
         const rooms = await Room.find({hotel:hotelData._id.toString()}).populate("hotel");
@@ -56,10 +49,7 @@ export const getOwnerRooms = async (req, res)=>{
         res.json({success:false, message: error.message});
     }
 }
-
-
-
-export const toggleRoomAvailability = async (req, res)=>{
+export const toggleRoomAvailability =async (req,res) => {
     try {
         const {roomId} = req.body;
         const roomData = await Room.findById(roomId);
